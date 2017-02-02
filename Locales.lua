@@ -1,0 +1,223 @@
+-- update at XXX TODO
+
+local L
+
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Krosus Assist", "deDE")
+if L then
+	--L.pluginName = "KrosusAssist"
+	--L.disabled = "Disabled"
+	--L.disabledDisplayDesc = "Disable the plugin."
+	--L.lock = "Lock"
+	--L.lockDesc = "Locks the display in place, preventing moving and resizing."
+	--L.font = "Font"
+	--L.fontSize = "Font size"
+	--L.positionX = "X Position"
+	--L.positionY = "Y Position"
+	--L.positionExact = "Exact Positioning"
+	--L.positionDesc = "Type in the box or move the slider if you need exact positioning from the anchor."
+	--L.close = "Close"
+	--L.closeDesc = "Closes the display.\n\nTo disable it completely, you have to go into the options and toggle the 'disabled' checkbox."
+	--L.toggleDisplayPrint = "The display will show next time. To disable it completely, you have to go into the options and toggle the 'disabled' checkbox."
+	--L.question = "Where was the first Fel Beam?"
+	--L.left = "left"
+	--L.right = "right"
+	--L.outdatedBigWigs = "You are using an outdated version of BigWigs which does not support KrosusAssist. Please update it to use KrosusAssist."
+end
+
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Krosus Assist", "esES")
+if L then
+	--L.pluginName = "KrosusAssist"
+	--L.disabled = "Disabled"
+	--L.disabledDisplayDesc = "Disable the plugin."
+	--L.lock = "Lock"
+	--L.lockDesc = "Locks the display in place, preventing moving and resizing."
+	--L.font = "Font"
+	--L.fontSize = "Font size"
+	--L.positionX = "X Position"
+	--L.positionY = "Y Position"
+	--L.positionExact = "Exact Positioning"
+	--L.positionDesc = "Type in the box or move the slider if you need exact positioning from the anchor."
+	--L.close = "Close"
+	--L.closeDesc = "Closes the display.\n\nTo disable it completely, you have to go into the options and toggle the 'disabled' checkbox."
+	--L.toggleDisplayPrint = "The display will show next time. To disable it completely, you have to go into the options and toggle the 'disabled' checkbox."
+	--L.question = "Where was the first Fel Beam?"
+	--L.left = "left"
+	--L.right = "right"
+	--L.outdatedBigWigs = "You are using an outdated version of BigWigs which does not support KrosusAssist. Please update it to use KrosusAssist."
+end
+
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Krosus Assist", "esMX")
+if L then
+	--L.pluginName = "KrosusAssist"
+	--L.disabled = "Disabled"
+	--L.disabledDisplayDesc = "Disable the plugin."
+	--L.lock = "Lock"
+	--L.lockDesc = "Locks the display in place, preventing moving and resizing."
+	--L.font = "Font"
+	--L.fontSize = "Font size"
+	--L.positionX = "X Position"
+	--L.positionY = "Y Position"
+	--L.positionExact = "Exact Positioning"
+	--L.positionDesc = "Type in the box or move the slider if you need exact positioning from the anchor."
+	--L.close = "Close"
+	--L.closeDesc = "Closes the display.\n\nTo disable it completely, you have to go into the options and toggle the 'disabled' checkbox."
+	--L.toggleDisplayPrint = "The display will show next time. To disable it completely, you have to go into the options and toggle the 'disabled' checkbox."
+	--L.question = "Where was the first Fel Beam?"
+	--L.left = "left"
+	--L.right = "right"
+	--L.outdatedBigWigs = "You are using an outdated version of BigWigs which does not support KrosusAssist. Please update it to use KrosusAssist."
+end
+
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Krosus Assist", "frFR")
+if L then
+	--L.pluginName = "KrosusAssist"
+	--L.disabled = "Disabled"
+	--L.disabledDisplayDesc = "Disable the plugin."
+	--L.lock = "Lock"
+	--L.lockDesc = "Locks the display in place, preventing moving and resizing."
+	--L.font = "Font"
+	--L.fontSize = "Font size"
+	--L.positionX = "X Position"
+	--L.positionY = "Y Position"
+	--L.positionExact = "Exact Positioning"
+	--L.positionDesc = "Type in the box or move the slider if you need exact positioning from the anchor."
+	--L.close = "Close"
+	--L.closeDesc = "Closes the display.\n\nTo disable it completely, you have to go into the options and toggle the 'disabled' checkbox."
+	--L.toggleDisplayPrint = "The display will show next time. To disable it completely, you have to go into the options and toggle the 'disabled' checkbox."
+	--L.question = "Where was the first Fel Beam?"
+	--L.left = "left"
+	--L.right = "right"
+	--L.outdatedBigWigs = "You are using an outdated version of BigWigs which does not support KrosusAssist. Please update it to use KrosusAssist."
+end
+
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Krosus Assist", "itIT")
+if L then
+	--L.pluginName = "KrosusAssist"
+	--L.disabled = "Disabled"
+	--L.disabledDisplayDesc = "Disable the plugin."
+	--L.lock = "Lock"
+	--L.lockDesc = "Locks the display in place, preventing moving and resizing."
+	--L.font = "Font"
+	--L.fontSize = "Font size"
+	--L.positionX = "X Position"
+	--L.positionY = "Y Position"
+	--L.positionExact = "Exact Positioning"
+	--L.positionDesc = "Type in the box or move the slider if you need exact positioning from the anchor."
+	--L.close = "Close"
+	--L.closeDesc = "Closes the display.\n\nTo disable it completely, you have to go into the options and toggle the 'disabled' checkbox."
+	--L.toggleDisplayPrint = "The display will show next time. To disable it completely, you have to go into the options and toggle the 'disabled' checkbox."
+	--L.question = "Where was the first Fel Beam?"
+	--L.left = "left"
+	--L.right = "right"
+	--L.outdatedBigWigs = "You are using an outdated version of BigWigs which does not support KrosusAssist. Please update it to use KrosusAssist."
+end
+
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Krosus Assist", "koKR")
+if L then
+	--L.pluginName = "KrosusAssist"
+	--L.disabled = "Disabled"
+	--L.disabledDisplayDesc = "Disable the plugin."
+	--L.lock = "Lock"
+	--L.lockDesc = "Locks the display in place, preventing moving and resizing."
+	--L.font = "Font"
+	--L.fontSize = "Font size"
+	--L.positionX = "X Position"
+	--L.positionY = "Y Position"
+	--L.positionExact = "Exact Positioning"
+	--L.positionDesc = "Type in the box or move the slider if you need exact positioning from the anchor."
+	--L.close = "Close"
+	--L.closeDesc = "Closes the display.\n\nTo disable it completely, you have to go into the options and toggle the 'disabled' checkbox."
+	--L.toggleDisplayPrint = "The display will show next time. To disable it completely, you have to go into the options and toggle the 'disabled' checkbox."
+	--L.question = "Where was the first Fel Beam?"
+	--L.left = "left"
+	--L.right = "right"
+	--L.outdatedBigWigs = "You are using an outdated version of BigWigs which does not support KrosusAssist. Please update it to use KrosusAssist."
+end
+
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Krosus Assist", "ptBR")
+if L then
+	--L.pluginName = "KrosusAssist"
+	--L.disabled = "Disabled"
+	--L.disabledDisplayDesc = "Disable the plugin."
+	--L.lock = "Lock"
+	--L.lockDesc = "Locks the display in place, preventing moving and resizing."
+	--L.font = "Font"
+	--L.fontSize = "Font size"
+	--L.positionX = "X Position"
+	--L.positionY = "Y Position"
+	--L.positionExact = "Exact Positioning"
+	--L.positionDesc = "Type in the box or move the slider if you need exact positioning from the anchor."
+	--L.close = "Close"
+	--L.closeDesc = "Closes the display.\n\nTo disable it completely, you have to go into the options and toggle the 'disabled' checkbox."
+	--L.toggleDisplayPrint = "The display will show next time. To disable it completely, you have to go into the options and toggle the 'disabled' checkbox."
+	--L.question = "Where was the first Fel Beam?"
+	--L.left = "left"
+	--L.right = "right"
+	--L.outdatedBigWigs = "You are using an outdated version of BigWigs which does not support KrosusAssist. Please update it to use KrosusAssist."
+end
+
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Krosus Assist", "ruRU")
+if L then
+	--L.pluginName = "KrosusAssist"
+	--L.disabled = "Disabled"
+	--L.disabledDisplayDesc = "Disable the plugin."
+	--L.lock = "Lock"
+	--L.lockDesc = "Locks the display in place, preventing moving and resizing."
+	--L.font = "Font"
+	--L.fontSize = "Font size"
+	--L.positionX = "X Position"
+	--L.positionY = "Y Position"
+	--L.positionExact = "Exact Positioning"
+	--L.positionDesc = "Type in the box or move the slider if you need exact positioning from the anchor."
+	--L.close = "Close"
+	--L.closeDesc = "Closes the display.\n\nTo disable it completely, you have to go into the options and toggle the 'disabled' checkbox."
+	--L.toggleDisplayPrint = "The display will show next time. To disable it completely, you have to go into the options and toggle the 'disabled' checkbox."
+	--L.question = "Where was the first Fel Beam?"
+	--L.left = "left"
+	--L.right = "right"
+	--L.outdatedBigWigs = "You are using an outdated version of BigWigs which does not support KrosusAssist. Please update it to use KrosusAssist."
+end
+
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Krosus Assist", "zhCN")
+if L then
+	--L.pluginName = "KrosusAssist"
+	--L.disabled = "Disabled"
+	--L.disabledDisplayDesc = "Disable the plugin."
+	--L.lock = "Lock"
+	--L.lockDesc = "Locks the display in place, preventing moving and resizing."
+	--L.font = "Font"
+	--L.fontSize = "Font size"
+	--L.positionX = "X Position"
+	--L.positionY = "Y Position"
+	--L.positionExact = "Exact Positioning"
+	--L.positionDesc = "Type in the box or move the slider if you need exact positioning from the anchor."
+	--L.close = "Close"
+	--L.closeDesc = "Closes the display.\n\nTo disable it completely, you have to go into the options and toggle the 'disabled' checkbox."
+	--L.toggleDisplayPrint = "The display will show next time. To disable it completely, you have to go into the options and toggle the 'disabled' checkbox."
+	--L.question = "Where was the first Fel Beam?"
+	--L.left = "left"
+	--L.right = "right"
+	--L.outdatedBigWigs = "You are using an outdated version of BigWigs which does not support KrosusAssist. Please update it to use KrosusAssist."
+end
+
+L = LibStub("AceLocale-3.0"):NewLocale("Big Wigs: Krosus Assist", "zhTW")
+if L then
+	--L.pluginName = "KrosusAssist"
+	--L.disabled = "Disabled"
+	--L.disabledDisplayDesc = "Disable the plugin."
+	--L.lock = "Lock"
+	--L.lockDesc = "Locks the display in place, preventing moving and resizing."
+	--L.font = "Font"
+	--L.fontSize = "Font size"
+	--L.positionX = "X Position"
+	--L.positionY = "Y Position"
+	--L.positionExact = "Exact Positioning"
+	--L.positionDesc = "Type in the box or move the slider if you need exact positioning from the anchor."
+	--L.close = "Close"
+	--L.closeDesc = "Closes the display.\n\nTo disable it completely, you have to go into the options and toggle the 'disabled' checkbox."
+	--L.toggleDisplayPrint = "The display will show next time. To disable it completely, you have to go into the options and toggle the 'disabled' checkbox."
+	--L.question = "Where was the first Fel Beam?"
+	--L.left = "left"
+	--L.right = "right"
+	--L.outdatedBigWigs = "You are using an outdated version of BigWigs which does not support KrosusAssist. Please update it to use KrosusAssist."
+end

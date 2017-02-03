@@ -1,1 +1,22 @@
-package-as: BigWigs_KrosusAssist
+package-as: KrosusAssist
+
+externals:
+	libs/LibStub:
+		url: svn://svn.wowace.com/wow/libstub/mainline/trunk
+		tag: latest
+	libs/AceLocale-3.0:
+		url: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceLocale-3.0
+	libs/AceConfig-3.0:
+		url: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceConfig-3.0
+	libs/AceDBOptions-3.0:
+		url: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceDBOptions-3.0
+	libs/AceDB-3.0:
+		url: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceDB-3.0
+	libs/AceConfig-3.0:
+		url: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceConfig-3.0
+	libs/AceConfigDialog-3.0:
+		url: svn://svn.wowace.com/wow/ace3/mainline/trunk/AceConfigDialog-3.0
+	Libs/LibSharedMedia-3.0:
+		url: svn://svn.wowace.com/wow/libsharedmedia-3-0/mainline/trunk/LibSharedMedia-3.0
+	Libs/AceGUI-3.0-SharedMediaWidgets:
+		url: svn://svn.wowace.com/wow/ace-gui-3-0-shared-media-widgets/mainline/trunk/AceGUI-3.0-SharedMediaWidgets

@@ -1,23 +1,35 @@
 
--- GLOBALS: BigWigs UIParent GameTooltip SLASH_BigWigs_KrosusAssist1 SLASH_BigWigs_KrosusAssist2 BigWigsKrosusFirstBeamWasLeft
+-- GLOBALS: UIParent GameTooltip print
+-- GLOBALS: LibStub
+-- GLOBALS: SLASH_KrosusAssist1 SLASH_KrosusAssist2
+-- GLOBALS: BigWigsKrosusFirstBeamWasLeft DBMUpdateKrosusBeam
 
 -------------------------------------------------------------------------------
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("KrosusAssist")
-if not plugin then return end
+local plugin = CreateFrame("Frame", "KrosusAssist")
 
 plugin.defaultDB = {
-	posx = nil,
-	posy = nil,
-	lock = nil,
-	width = 140,
-	height = 120,
-	disabled = false,
-	font = nil,
-	fontSize = nil,
+	profile = {
+		posx = nil,
+		posy = nil,
+		lock = nil,
+		width = 180,
+		height = 160,
+		disabled = false,
+		font = nil,
+		fontSize = nil,
+	},
 }
+
+-------------------------------------------------------------------------------
+-- Helper functions
+--
+
+function plugin:Print(...)
+	print("|cffffff00KrosusAssist:|r", ...)
+end
 
 -------------------------------------------------------------------------------
 -- Locals
@@ -28,29 +40,32 @@ local display = nil
 local media = LibStub("LibSharedMedia-3.0")
 local inConfigMode = nil
 
-local L = BigWigsAPI:NewLocale("BigWigs: KrosusAssist", "enUS")
+local L = LibStub("AceLocale-3.0"):NewLocale("KrosusAssist", "enUS", true)
 if L then
-	L.pluginName = "KrosusAssist"
-	L.disabled = "Disabled"
-	L.disabledDisplayDesc = "Disable the plugin."
-	L.lock = "Lock"
-	L.lockDesc = "Locks the display in place, preventing moving and resizing."
-	L.font = "Font"
-	L.fontSize = "Font size"
-	L.positionX = "X Position"
-	L.positionY = "Y Position"
-	L.positionExact = "Exact Positioning"
-	L.positionDesc = "Type in the box or move the slider if you need exact positioning from the anchor."
-	L.close = "Close"
-	L.closeDesc = "Closes the display.\n\nTo disable it completely, you have to go into the options and toggle the 'disabled' checkbox."
-	L.toggleDisplayPrint = "The display will show next time. To disable it completely, you have to go into the options and toggle the 'disabled' checkbox."
-	L.question = "Where was the first Fel Beam?"
-	L.left = "left"
-	L.right = "right"
-	L.outdatedBigWigs = "You are using an outdated version of BigWigs which does not support KrosusAssist. Please update it to use KrosusAssist."
+	L["Krosus Assist"] = true
+	L["Disabled"] = true
+	L["Disable the plugin."] = true
+	L["Lock"] = true
+	L["Locks the display in place, preventing moving and resizing."] = true
+	L["Font"] = true
+	L["Font size"] = true
+	L["X Position"] = true
+	L["Y Position"] = true
+	L["Exact Positioning"] = true
+	L["Type in the box or move the slider if you need exact positioning from the anchor."] = true
+	L["Close"] = true
+	L["Closes the display.\n\nTo disable it completely, you have to go into the options and toggle the 'disabled' checkbox."] = true
+	L["The display will show next time. To disable it completely, you have to go into the options and toggle the 'disabled' checkbox."] = true
+	L["Where was the first Fel Beam?"] = true
+	L["left"] = true
+	L["right"] = true
+	L["You are using no or an outdated version of a boss mod. Please update your existing mod or download BigWigs."] = true
+	L["Reset"] = true
+	L["Resets the display to its default position"] = true
 end
+L = LibStub("AceLocale-3.0"):GetLocale("KrosusAssist")
 
-plugin.displayName = L.pluginName
+plugin.displayName = L["Krosus Assist"]
 
 -------------------------------------------------------------------------------
 -- Display Window
@@ -114,7 +129,7 @@ local function createHighlightTexture(self)
 	texture:SetTexture([[Interface\QuestFrame\UI-QuestLogTitleHighlight]])
 	texture:SetBlendMode("ADD")
 	texture:SetAllPoints(self)
-	texture:SetAlpha(.1)
+	texture:SetAlpha(.15)
 	return texture
 end
 
@@ -133,12 +148,11 @@ local function onButtonLeave(self)
 	self:SetBackdropBorderColor(0, 0, 0)
 end
 
-
 function plugin:RestyleWindow()
 	if not display then return end
 
 	display.question:SetFont(media:Fetch("font", db.font), db.fontSize)
-	local font = CreateFont("BigWigs_KrosusAssistFont")
+	local font = CreateFont("KrosusAssistFont")
 	font:SetFont(media:Fetch("font", db.font), db.fontSize)
 	display.buttonLeft:SetNormalFontObject(font)
 	display.buttonRight:SetNormalFontObject(font)
@@ -172,8 +186,6 @@ function plugin:RestyleWindow()
 	display.buttonRight:SetPoint("BOTTOMRIGHT", display, "BOTTOMRIGHT", -2, 2)
 end
 
-
-
 local function updateProfile()
 	db = plugin.db.profile
 
@@ -191,8 +203,8 @@ end
 local function resetAnchor()
 	display:ClearAllPoints()
 	display:SetPoint("CENTER", UIParent, "CENTER", 400, 0)
-	db.width = plugin.defaultDB.width
-	db.height = plugin.defaultDB.height
+	db.width = plugin.defaultDB.profile.width
+	db.height = plugin.defaultDB.profile.height
 	display:SetWidth(db.width)
 	display:SetHeight(db.height)
 	db.posx = nil
@@ -203,143 +215,109 @@ end
 -- Initialization
 --
 
-function plugin:OnRegister()
-	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-	updateProfile()
-end
+local createAnchor = function()
+	local anchor = CreateFrame("Frame", "KrosusAssistAnchor", UIParent)
+	anchor:SetWidth(db.width)
+	anchor:SetHeight(db.height)
+	anchor:SetMinResize(100, 30)
+	anchor:SetClampedToScreen(true)
+	anchor:EnableMouse(true)
 
+	local bg = anchor:CreateTexture(nil, "BACKGROUND")
+	bg:SetAllPoints(anchor)
+	bg:SetColorTexture(0, 0, 0, 0.3)
+	anchor.background = bg
 
-do
-	local createAnchor = function()
-		local anchor = CreateFrame("Frame", "BigWigsKrosusAssistAnchor", UIParent)
-		anchor:SetWidth(db.width)
-		anchor:SetHeight(db.height)
-		anchor:SetMinResize(100, 30)
-		anchor:SetClampedToScreen(true)
-		anchor:EnableMouse(true)
-		anchor:SetScript("OnMouseUp", function(self, button)
-			if inConfigMode and button == "LeftButton" then
-				plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
-			end
-		end)
+	local close = CreateFrame("Button", nil, anchor)
+	close:SetPoint("BOTTOMRIGHT", anchor, "TOPRIGHT", -2, 2)
+	close:SetFrameLevel(anchor:GetFrameLevel() + 5) -- place this above everything
+	close:SetHeight(16)
+	close:SetWidth(16)
+	close.tooltipHeader = L["Close"]
+	close.tooltipText = L["Closes the display.\n\nTo disable it completely, you have to go into the options and toggle the 'disabled' checkbox."]
+	close:SetScript("OnEnter", onControlEnter)
+	close:SetScript("OnLeave", onControlLeave)
+	close:SetScript("OnClick", function()
+		plugin:Print(L["The display will show next time. To disable it completely, you have to go into the options and toggle the 'disabled' checkbox."])
+		plugin:Close(true)
+	end)
+	close:SetNormalTexture("Interface\\AddOns\\KrosusAssist\\Textures\\close")
+	anchor.close = close
 
-		local bg = anchor:CreateTexture(nil, "BACKGROUND")
-		bg:SetAllPoints(anchor)
-		bg:SetColorTexture(0, 0, 0, 0.3)
-		anchor.background = bg
+	local header = anchor:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+	header:SetText(L["Krosus Assist"])
+	header:SetPoint("BOTTOM", anchor, "TOP", 0, 4)
+	anchor.title = header
 
-		local close = CreateFrame("Button", nil, anchor)
-		close:SetPoint("BOTTOMRIGHT", anchor, "TOPRIGHT", -2, 2)
-		close:SetFrameLevel(anchor:GetFrameLevel() + 5) -- place this above everything
-		close:SetHeight(16)
-		close:SetWidth(16)
-		close.tooltipHeader = L.close
-		close.tooltipText = L.closeDesc
-		close:SetScript("OnEnter", onControlEnter)
-		close:SetScript("OnLeave", onControlLeave)
-		close:SetScript("OnClick", function()
-			BigWigs:Print(L.toggleDisplayPrint)
-			plugin:Close(true)
-		end)
-		close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
-		anchor.close = close
+	local question = anchor:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+	question:SetText(L["Where was the first Fel Beam?"])
+	question:SetPoint("TOP", anchor, "TOP")
+	anchor.question = question
 
-		local header = anchor:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-		header:SetText(L.pluginName)
-		header:SetPoint("BOTTOM", anchor, "TOP", 0, 4)
-		anchor.title = header
+	local buttonLeft = CreateFrame("Button", nil, anchor)
+	buttonLeft:SetPoint("TOPLEFT", anchor, "TOPLEFT", 0, question:GetHeight())
+	buttonLeft:SetPoint("BOTTOMRIGHT", anchor, "BOTTOM")
+	buttonLeft:SetNormalFontObject("GameFontHighlightSmall")
+	buttonLeft:SetText(L["left"])
+	buttonLeft:SetScript("OnEnter", onButtonEnter)
+	buttonLeft:SetScript("OnLeave", onButtonLeave)
+	buttonLeft:SetScript("OnClick", function()
+		plugin:BeamWasLeft(true)
+	end)
+	buttonLeft:SetBackdrop({
+		bgFile = [[Interface/DialogFrame/UI-DialogBox-Background]],
+		edgeFile = [[Interface/Buttons/WHITE8X8]],
+		edgeSize = 3,
+	})
+	buttonLeft:SetBackdropColor(0.15, 0.15, 0.15, .5)
+	buttonLeft:SetBackdropBorderColor(0, 0, 0)
+	anchor.buttonLeft = buttonLeft
 
-		local question = anchor:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-		question:SetText(L.question)
-		question:SetPoint("TOP", anchor, "TOP")
-		anchor.question = question
+	local buttonRight = CreateFrame("Button", nil, anchor)
+	buttonRight:SetPoint("TOPLEFT", anchor, "TOP", 0, question:GetHeight())
+	buttonRight:SetPoint("BOTTOMRIGHT", anchor, "BOTTOMRIGHT")
+	buttonRight:SetNormalFontObject("GameFontHighlightSmall")
+	buttonRight:SetText(L["right"])
+	buttonRight:SetScript("OnEnter", onButtonEnter)
+	buttonRight:SetScript("OnLeave", onButtonLeave)
+	buttonRight:SetScript("OnClick", function()
+		plugin:BeamWasLeft(false)
+	end)
+	buttonRight:SetBackdrop({
+		bgFile = [[Interface/DialogFrame/UI-DialogBox-Background]],
+		edgeFile = [[Interface/Buttons/WHITE8X8]],
+		edgeSize = 3,
+	})
+	buttonRight:SetBackdropColor(0.15, 0.15, 0.15, .5)
+	buttonRight:SetBackdropBorderColor(0, 0, 0)
+	anchor.buttonRight = buttonRight
 
-		local buttonLeft = CreateFrame("Button", nil, anchor)
-		buttonLeft:SetPoint("TOPLEFT", anchor, "TOPLEFT", 0, question:GetHeight())
-		buttonLeft:SetPoint("BOTTOMRIGHT", anchor, "BOTTOM")
-		buttonLeft:SetNormalFontObject("GameFontHighlightSmall")
-		buttonLeft:SetText(L.left)
-		buttonLeft:SetScript("OnEnter", onButtonEnter)
-		buttonLeft:SetScript("OnLeave", onButtonLeave)
-		buttonLeft:SetScript("OnClick", function()
-			plugin:BeamWasLeft(true)
-		end)
-		buttonLeft:SetBackdrop({
-			bgFile = [[Interface/DialogFrame/UI-DialogBox-Background]],
-			edgeFile = [[Interface/Buttons/WHITE8X8]],
-			edgeSize = 3,
-		})
-		buttonLeft:SetBackdropColor(0.15, 0.15, 0.15, .5)
-		buttonLeft:SetBackdropBorderColor(0, 0, 0)
-		anchor.buttonLeft = buttonLeft
+	local function showAnimParent(frame) frame:GetParent():Show() frame.playing = true end
+	local function hideAnimParent(frame) frame:GetParent():Hide() frame.playing = nil end
 
-		local buttonRight = CreateFrame("Button", nil, anchor)
-		buttonRight:SetPoint("TOPLEFT", anchor, "TOP", 0, question:GetHeight())
-		buttonRight:SetPoint("BOTTOMRIGHT", anchor, "BOTTOMRIGHT")
-		buttonRight:SetNormalFontObject("GameFontHighlightSmall")
-		buttonRight:SetText(L.right)
-		buttonRight:SetScript("OnEnter", onButtonEnter)
-		buttonRight:SetScript("OnLeave", onButtonLeave)
-		buttonRight:SetScript("OnClick", function()
-			plugin:BeamWasLeft(false)
-		end)
-		buttonRight:SetBackdrop({
-			bgFile = [[Interface/DialogFrame/UI-DialogBox-Background]],
-			edgeFile = [[Interface/Buttons/WHITE8X8]],
-			edgeSize = 3,
-		})
-		buttonRight:SetBackdropColor(0.15, 0.15, 0.15, .5)
-		buttonRight:SetBackdropBorderColor(0, 0, 0)
-		anchor.buttonRight = buttonRight
+	local drag = CreateFrame("Frame", nil, anchor)
+	drag.frame = anchor
+	drag:SetFrameLevel(anchor:GetFrameLevel() + 5) -- place this above everything
+	drag:SetWidth(16)
+	drag:SetHeight(16)
+	drag:SetPoint("BOTTOMRIGHT", anchor, -1, 1)
+	drag:EnableMouse(true)
+	drag:SetScript("OnMouseDown", OnDragHandleMouseDown)
+	drag:SetScript("OnMouseUp", OnDragHandleMouseUp)
+	drag:SetAlpha(0.5)
+	anchor.drag = drag
 
-		local function showAnimParent(frame) frame:GetParent():Show() frame.playing = true end
-		local function hideAnimParent(frame) frame:GetParent():Hide() frame.playing = nil end
+	local tex = drag:CreateTexture(nil, "OVERLAY")
+	tex:SetTexture("Interface\\AddOns\\KrosusAssist\\Textures\\draghandle")
+	tex:SetWidth(16)
+	tex:SetHeight(16)
+	tex:SetBlendMode("ADD")
+	tex:SetPoint("CENTER", drag)
 
-		local drag = CreateFrame("Frame", nil, anchor)
-		drag.frame = anchor
-		drag:SetFrameLevel(anchor:GetFrameLevel() + 5) -- place this above everything
-		drag:SetWidth(16)
-		drag:SetHeight(16)
-		drag:SetPoint("BOTTOMRIGHT", anchor, -1, 1)
-		drag:EnableMouse(true)
-		drag:SetScript("OnMouseDown", OnDragHandleMouseDown)
-		drag:SetScript("OnMouseUp", OnDragHandleMouseUp)
-		drag:SetAlpha(0.5)
-		anchor.drag = drag
+	plugin:RestyleWindow()
 
-		local tex = drag:CreateTexture(nil, "OVERLAY")
-		tex:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\draghandle")
-		tex:SetWidth(16)
-		tex:SetHeight(16)
-		tex:SetBlendMode("ADD")
-		tex:SetPoint("CENTER", drag)
-
-		plugin:RestyleWindow()
-
-		anchor:Hide()
-		display = anchor
-
-		-- USE THIS CALLBACK TO SKIN THIS WINDOW! NO NEED FOR UGLY HAX! E.g.
-		-- local name, addon = ...
-		-- if BigWigsLoader then
-		-- 	BigWigsLoader.RegisterMessage(addon, "BigWigs_FrameCreated", function(event, frame, name) print(name.." frame created.") end)
-		-- end
-		plugin:SendMessage("BigWigs_FrameCreated", anchor, "KrosusAssist")
-	end
-
-	function plugin:OnPluginEnable()
-		if createAnchor then createAnchor() createAnchor = nil end
-		self:RegisterMessage("BigWigs_OnBossEngage")
-		self:RegisterMessage("BigWigs_OnBossReboot", "BigWigs_OnBossDisable")
-		self:RegisterMessage("BigWigs_OnBossDisable")
-
-		self:RegisterMessage("BigWigs_StartConfigureMode")
-		self:RegisterMessage("BigWigs_StopConfigureMode")
-		self:RegisterMessage("BigWigs_SetConfigureTarget")
-		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-		self:RegisterMessage("BigWigs_ResetPositions", resetAnchor)
-		updateProfile()
-	end
+	anchor:Hide()
+	display = anchor
 end
 
 function plugin:OnPluginDisable()
@@ -350,12 +328,12 @@ end
 -- Options
 --
 
-function plugin:BigWigs_StartConfigureMode()
+function plugin:StartConfigureMode()
 	inConfigMode = true
 	self:Test()
 end
 
-function plugin:BigWigs_StopConfigureMode()
+function plugin:StopConfigureMode()
 	inConfigMode = nil
 	if db.lock then
 		display:EnableMouse(false) -- Mouse disabled whilst locked, but we enable it in test mode. Re-disable it.
@@ -363,19 +341,10 @@ function plugin:BigWigs_StopConfigureMode()
 	self:Close(true)
 end
 
-function plugin:BigWigs_SetConfigureTarget(event, module)
-	if module == self then
-		display.background:SetColorTexture(0.2, 1, 0.2, 0.3)
-	else
-		display.background:SetColorTexture(0, 0, 0, 0.3)
-	end
-end
-
-
 local disabled = function() return plugin.db.profile.disabled end
 local function GetOptions()
 	local options = {
-		name = L.pluginName,
+		name = L["Krosus Assist"],
 		type = "group",
 		get = function(info)
 			local key = info[#info]
@@ -405,29 +374,46 @@ local function GetOptions()
 		args = {
 			disabled = {
 				type = "toggle",
-				name = L.disabled,
-				desc = L.disabledDisplayDesc,
+				name = L["Disabled"],
+				desc = L["Disable the plugin."],
 				order = 1,
 			},
 			lock = {
 				type = "toggle",
-				name = L.lock,
-				desc = L.lockDesc,
+				name = L["Lock"],
+				desc = L["Locks the display in place, preventing moving and resizing."],
 				order = 2,
 				disabled = disabled,
+				set = function(info, value)
+					local key = info[#info]
+					db[key] = value
+					if value then
+						plugin:StopConfigureMode()
+					else
+						plugin:StartConfigureMode()
+					end
+					plugin:RestyleWindow()
+				end,
+			},
+			reset = {
+				type = "execute",
+				name = L["Reset"],
+				desc = L["Resets the display to its default position"],
+				order = 3,
+				func = resetAnchor,
 			},
 			font = {
 				type = "select",
-				name = L.font,
-				order = 3,
+				name = L["Font"],
+				order = 10,
 				values = media:List("font"),
 				width = "full",
 				itemControl = "DDI-Font",
 			},
 			fontSize = {
 				type = "range",
-				name = L.fontSize,
-				order = 4,
+				name = L["Font size"],
+				order = 11,
 				max = 40,
 				min = 8,
 				step = 1,
@@ -435,14 +421,14 @@ local function GetOptions()
 			},
 			exactPositioning = {
 				type = "group",
-				name = L.positionExact,
-				order = 8,
+				name = L["Exact Positioning"],
+				order = 20,
 				inline = true,
 				args = {
 					posx = {
 						type = "range",
-						name = L.positionX,
-						desc = L.positionDesc,
+						name = L["X Position"],
+						desc = L["Type in the box or move the slider if you need exact positioning from the anchor."],
 						min = 0,
 						max = 2048,
 						step = 1,
@@ -451,8 +437,8 @@ local function GetOptions()
 					},
 					posy = {
 						type = "range",
-						name = L.positionY,
-						desc = L.positionDesc,
+						name = L["Y Position"],
+						desc = L["Type in the box or move the slider if you need exact positioning from the anchor."],
 						min = 0,
 						max = 2048,
 						step = 1,
@@ -466,31 +452,35 @@ local function GetOptions()
 	return options
 end
 
-plugin.subPanelOptions = {
-	key = "BigWigs: KrosusAssist",
-	name = L.pluginName,
-	options = GetOptions,
-}
-
 -------------------------------------------------------------------------------
 -- Events
 --
 
-do
-	local opener = nil
-	function plugin:BigWigs_OnBossEngage(event, module, difficulty)
-		if db.disabled then return end
-		if module.engageId ~= 1842 then return end
-		opener = module
-		self:Open(module)
-	end
+function plugin:ADDON_LOADED(...)
+	if select(1,...) == "KrosusAssist" then
+		self:UnregisterEvent("ADDON_LOADED")
+		plugin.db = LibStub("AceDB-3.0"):New("KrosusAssistDB", plugin.defaultDB, true)
+		LibStub("AceConfig-3.0"):RegisterOptionsTable("Krosus Assist", GetOptions())
+		LibStub("AceConfigDialog-3.0"):AddToBlizOptions("Krosus Assist", "Krosus Assist")
+		updateProfile()
 
-	function plugin:BigWigs_OnBossDisable(event, module)
-		if module ~= opener then return end
-		self:Close()
+		if createAnchor then createAnchor() createAnchor = nil end
+
+		self:RestyleWindow()
+
+		self:RegisterEvent("ENCOUNTER_START")
+		self:RegisterEvent("ENCOUNTER_END")
 	end
 end
 
+function plugin:ENCOUNTER_START(encounterID)
+	if db.disabled or encounterID ~= 1842 then return end
+	self:Open()
+end
+
+function plugin:ENCOUNTER_END(encounterID)
+	self:Close()
+end
 
 -------------------------------------------------------------------------------
 -- API
@@ -501,6 +491,7 @@ function plugin:Close()
 end
 
 function plugin:Open()
+	self:RestyleWindow()
 	display:Show()
 end
 
@@ -509,14 +500,16 @@ function plugin:Test()
 	if db.lock then
 		display:EnableMouse(true) -- Mouse disabled whilst locked, enable it in test mode
 	end
-	display:Show()
+	self:Open()
 end
 
 function plugin:BeamWasLeft(wasLeft)
-	if BigWigsKrosusFirstBeamWasLeft then
+	if BigWigsKrosusFirstBeamWasLeft then -- BigWigs
 		BigWigsKrosusFirstBeamWasLeft(wasLeft)
+	elseif DBMUpdateKrosusBeam then -- DBM
+		DBMUpdateKrosusBeam(wasLeft)
 	else
-		print(L.outdatedBigWigs)
+		plugin:Print(L["You are using no or an outdated version of a boss mod. Please update your existing mod or download BigWigs."])
 	end
 	self:Close()
 end
@@ -525,10 +518,16 @@ end
 -- Slash command
 --
 
-SlashCmdList.BigWigs_KrosusAssist = function(input)
+SlashCmdList.KrosusAssist = function(input)
 	input = input:lower()
 
-	LibStub("AceConfigDialog-3.0"):Open("BigWigs", "BigWigs: KrosusAssist")
+	LibStub("AceConfigDialog-3.0"):Open("Krosus Assist")
+	if not db.lock then plugin:StartConfigureMode() end
 end
-SLASH_BigWigs_KrosusAssist1 = "/bwkrosus"
-SLASH_BigWigs_KrosusAssist2 = "/krosusassist"
+SLASH_KrosusAssist1 = "/krosus"
+SLASH_KrosusAssist2 = "/krosusassist"
+
+plugin:SetScript("OnEvent", function(self, event, ...)
+	self[event](self, ...); -- call one of the functions above
+end);
+plugin:RegisterEvent("ADDON_LOADED")

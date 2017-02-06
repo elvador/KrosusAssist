@@ -193,8 +193,7 @@ local function updateProfile()
 		db.font = media:GetDefault("font")
 	end
 	if not db.fontSize then
-		local _, size = GameFontNormalHuge:GetFont()
-		db.fontSize = size
+		db.fontSize = 18
 	end
 
 	plugin:RestyleWindow()
@@ -406,9 +405,9 @@ local function GetOptions()
 				type = "select",
 				name = L["Font"],
 				order = 10,
-				values = media:List("font"),
+				values = media:HashTable("font"),
 				width = "full",
-				itemControl = "DDI-Font",
+				dialogControl = 'LSM30_Font',
 			},
 			fontSize = {
 				type = "range",

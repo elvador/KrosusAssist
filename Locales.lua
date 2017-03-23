@@ -2,7 +2,7 @@
 
 local L
 
-L = LibStub("AceLocale-3.0"):NewLocale("Krosus Assist", "deDE")
+L = LibStub("AceLocale-3.0"):NewLocale("KrosusAssist", "deDE")
 if L then
 	L["Krosus Assist"] = true
 	L["Disabled"] = "Deaktiviert"
@@ -26,7 +26,7 @@ if L then
 	L["Resets the display to its default position"] = "Setzt die Anzeige auf seine Standardposition zurück."
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Krosus Assist", "esES")
+L = LibStub("AceLocale-3.0"):NewLocale("KrosusAssist", "esES")
 if L then
 	--L["Krosus Assist"] = true
 	--L["Disabled"] = true
@@ -50,7 +50,7 @@ if L then
 	--L["Resets the display to its default position"] = true
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Krosus Assist", "esMX")
+L = LibStub("AceLocale-3.0"):NewLocale("KrosusAssist", "esMX")
 if L then
 	--L["Krosus Assist"] = true
 	--L["Disabled"] = true
@@ -74,7 +74,7 @@ if L then
 	--L["Resets the display to its default position"] = true
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Krosus Assist", "frFR")
+L = LibStub("AceLocale-3.0"):NewLocale("KrosusAssist", "frFR")
 if L then
 	--L["Krosus Assist"] = true
 	--L["Disabled"] = true
@@ -98,7 +98,7 @@ if L then
 	--L["Resets the display to its default position"] = true
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Krosus Assist", "itIT")
+L = LibStub("AceLocale-3.0"):NewLocale("KrosusAssist", "itIT")
 if L then
 	--L["Krosus Assist"] = true
 	--L["Disabled"] = true
@@ -122,7 +122,31 @@ if L then
 	--L["Resets the display to its default position"] = true
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Krosus Assist", "koKR")
+L = LibStub("AceLocale-3.0"):NewLocale("KrosusAssist", "koKR")
+if L then
+	L["Krosus Assist"] = true
+	L["Disabled"] = "사용 안함"
+	L["Disable the plugin."] = "플러그인을 비활성합니다."
+	L["Lock"] = "잠그기"
+	L["Locks the display in place, preventing moving and resizing."] = "디스플레이의 위치를 고정하여 이동과 크기 변경을 방지합니다."
+	L["Font"] = "글꼴"
+	L["Font size"] = "글꼴 크기"
+	L["X Position"] = "X 위치"
+	L["Y Position"] = "Y 위치"
+	L["Exact Positioning"] = "정확한 배치"
+	L["Type in the box or move the slider if you need exact positioning from the anchor."] = "고정기로부터 정확한 배치를 원한다면 슬라이더를 사용하거나 상자에 직접 입력하세요."
+	L["Close"] = "닫기"
+	L["Closes the display.\n\nTo disable it completely, you have to go into the options and toggle the 'disabled' checkbox."] = "디스플레이를 닫습니다.\n\n완전히 비활성하려면 옵션에서 '사용 안함' 선택상자를 선택하세요."
+	L["The display will show next time. To disable it completely, you have to go into the options and toggle the 'disabled' checkbox."] = "다음 번에 디스플레이가 표시됩니다. 완전히 비활성하려면 옵션에서 '사용 안함' 선택상자를 선택하세요."
+	L["Where was the first Fel Beam?"] = "첫번째 지옥 광선이 어느 쪽이었나요?"
+	L["left"] = "왼쪽"
+	L["right"] = "오른쪽"
+	L["You are using no or an outdated version of a boss mod. Please update your existing mod or download BigWigs."] = "당신은 우두머리 모듈을 사용 중이지 않거나 구버전을 사용 중입니다. 사용 중인 모듈을 업데이트하거나 BigWigs를 다운로드 해주세요."
+	L["Reset"] = "초기화"
+	L["Resets the display to its default position"] = "디스플레이를 기본 위치로 초기화합니다"
+end
+
+L = LibStub("AceLocale-3.0"):NewLocale("KrosusAssist", "ptBR")
 if L then
 	--L["Krosus Assist"] = true
 	--L["Disabled"] = true
@@ -146,7 +170,7 @@ if L then
 	--L["Resets the display to its default position"] = true
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Krosus Assist", "ptBR")
+L = LibStub("AceLocale-3.0"):NewLocale("KrosusAssist", "ruRU")
 if L then
 	--L["Krosus Assist"] = true
 	--L["Disabled"] = true
@@ -170,7 +194,7 @@ if L then
 	--L["Resets the display to its default position"] = true
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Krosus Assist", "ruRU")
+L = LibStub("AceLocale-3.0"):NewLocale("KrosusAssist", "zhCN")
 if L then
 	--L["Krosus Assist"] = true
 	--L["Disabled"] = true
@@ -194,31 +218,7 @@ if L then
 	--L["Resets the display to its default position"] = true
 end
 
-L = LibStub("AceLocale-3.0"):NewLocale("Krosus Assist", "zhCN")
-if L then
-	--L["Krosus Assist"] = true
-	--L["Disabled"] = true
-	--L["Disable the plugin."] = true
-	--L["Lock"] = true
-	--L["Locks the display in place, preventing moving and resizing."] = true
-	--L["Font"] = true
-	--L["Font size"] = true
-	--L["X Position"] = true
-	--L["Y Position"] = true
-	--L["Exact Positioning"] = true
-	--L["Type in the box or move the slider if you need exact positioning from the anchor."] = true
-	--L["Close"] = true
-	--L["Closes the display.\n\nTo disable it completely, you have to go into the options and toggle the 'disabled' checkbox."] = true
-	--L["The display will show next time. To disable it completely, you have to go into the options and toggle the 'disabled' checkbox."] = true
-	--L["Where was the first Fel Beam?"] = true
-	--L["left"] = true
-	--L["right"] = true
-	--L["You are using no or an outdated version of a boss mod. Please update your existing mod or download BigWigs."] = true
-	--L["Reset"] = true
-	--L["Resets the display to its default position"] = true
-end
-
-L = LibStub("AceLocale-3.0"):NewLocale("Krosus Assist", "zhTW")
+L = LibStub("AceLocale-3.0"):NewLocale("KrosusAssist", "zhTW")
 if L then
 	L["Krosus Assist"] = "克羅索斯助手"
 	L["Disabled"] = "停用"
